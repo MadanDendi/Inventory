@@ -9,21 +9,18 @@
 
 <html>
 <head>
- <link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="styles.css">
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
- 
- <style type="text/css">
 
-
+<style type="text/css">
 div #container {
-	
 	overflow: hidden;
 }
 
 .outer {
 	width: 17%;
-	height: 500 px; 
+	height: 500 px;
 	color: navy;
 	background-color: pink;
 	border: 2px solid darkblue;
@@ -31,20 +28,17 @@ div #container {
 	float: left;
 }
 
-
- .error {
-        color: #ff0000;
-    }
-    
-    .left{
-    width:20%;
-    height:200px;
-    border:1px solid #ccc;
-    float: left;
-    background-color:#FFF0F5;
-    
+.error {
+	color: #ff0000;
 }
 
+.left {
+	width: 20%;
+	height: 200px;
+	border: 1px solid #ccc;
+	float: left;
+	background-color: #FFF0F5;
+}
 </style>
 
 <script type="text/javascript">
@@ -95,41 +89,36 @@ div #container {
 	   javascript:window.history.forward(1);
 </script>
 </head>
-<body >
-<div>
-	<div style="width: 100%;background-color:#F0F8FF; padding: 10px" ><table>
-			<tr>
-				
-				<td><a href="home"
-					style=" padding-right: 40px;"><font
-						style="font-size: 30px; ">Home </font></a></td>
-						
-				<td><a href="#"
-					style=" padding-right: 40px;"
-					onclick="showRegform('addanimal')"><font
-						style="font-size: 30px; ">AddAnimals </font></a></td>
-				<td><a href="#"
-					style="padding-right: 40px;"
-					onclick="showRegform('feedentries')"><font
-						style="font-size: 30px; ">FeedEntry</font></a></td>
-				<td><a href="#"
-					style="padding-right: 40px;"
-					onclick="showRegform('feedshipment')"><font
-						style="font-size: 30px; ">FeedShipment</font></a></td>
-				<td><a href="#"
-					style="padding-right: 40px;"
-					onclick="showRegform('viewreports')"><font
-						style="font-size: 30px; ">ViewReports</font></a></td>
-				
-			</tr>
-		</table> </div>
-		<h1>${msg }</h1>
-	<div id="container"  >
-	 		
+<body>
+	<div>
+		<div style="width: 100%; background-color: #F0F8FF; padding: 10px">
+			<table>
+				<tr>
+
+					<td><a href="home" style="padding-right: 40px;"><font
+							style="font-size: 30px;">Home </font></a></td>
+
+					<td><a href="#" style="padding-right: 40px;"
+						onclick="showRegform('addanimal')"><font
+							style="font-size: 30px;">AddAnimals </font></a></td>
+					<td><a href="#" style="padding-right: 40px;"
+						onclick="showRegform('feedentries')"><font
+							style="font-size: 30px;">FeedEntry</font></a></td>
+					<td><a href="#" style="padding-right: 40px;"
+						onclick="showRegform('feedshipment')"><font
+							style="font-size: 30px;">FeedShipment</font></a></td>
+					<td><a href="#" style="padding-right: 40px;"
+						onclick="showRegform('viewreports')"><font
+							style="font-size: 30px;">ViewReports</font></a></td>
+
+				</tr>
+			</table>
+		</div>
+		<h3 align="center" style="color: purple;">${msg }</h3>
+		<div id="container" style="background-color: navy;"></div>
 	</div>
-</div>
-		
-	
+
+
 
 </body>
 </html>
