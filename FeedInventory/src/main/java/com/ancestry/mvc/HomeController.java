@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -24,8 +25,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ancestry.mvc.model.AddAnimal;
+import com.ancestry.mvc.model.AnimalAvgFeed;
 import com.ancestry.mvc.model.FeedEntry;
 import com.ancestry.mvc.model.FeedShipArrival;
+import com.ancestry.mvc.model.Zoo;
+import com.ancestry.mvc.model.ZooWastage;
 import com.ancestry.mvc.service.AnimalService;
 
 
@@ -166,7 +170,7 @@ public class HomeController {
 	public String feedShipment(Model model)
 	{
 		if(!model.containsAttribute("animaladd")) model.addAttribute("addfeedship", new FeedShipArrival());
-		List<AddAnimal> zoolist=animalService.getZooList();
+		List<Zoo> zoolist=animalService.getZooList();
 
 		model.addAttribute("zoolist", zoolist);
 		model.addAttribute("","");
@@ -197,7 +201,12 @@ public class HomeController {
 	@RequestMapping(value="viewreports")
 	public String viewReports(Model model)
 	{
-
+		 List<AnimalAvgFeed> avganimalfeed=animalService.avgAnimalFeed();
+		 List<ZooWastage> zoowastage=animalService.zooWastage();
+		 model.addAttribute("avganimalfeed", avganimalfeed);
+		 model.addAttribute("zoowastage",zoowastage);
+		
+        
 		return "viewreports";
 	}
 

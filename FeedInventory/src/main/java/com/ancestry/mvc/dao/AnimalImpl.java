@@ -2,6 +2,7 @@ package com.ancestry.mvc.dao;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +11,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.omg.CORBA.INTERNAL;
 
 import com.ancestry.mvc.model.AddAnimal;
+import com.ancestry.mvc.model.AnimalAvgFeed;
 import com.ancestry.mvc.model.FeedEntry;
 import com.ancestry.mvc.model.FeedShipArrival;
+import com.ancestry.mvc.model.Zoo;
+import com.ancestry.mvc.model.ZooWastage;
 
 /**
  * Developer: Madan Dendi
@@ -61,7 +66,6 @@ public class AnimalImpl implements AnimalDao{
 		
 		Session session = sessionFactory.openSession();
 
-		// Get All Employees
 		Transaction tx = session.beginTransaction();
 		org.hibernate.Query query = session.createSQLQuery("select * from animal");
 		
@@ -108,26 +112,71 @@ public class AnimalImpl implements AnimalDao{
 	}
 
 	@Override
-	public List<AddAnimal> getZooList() {
+	public List<Zoo> getZooList() {
 		Session session = sessionFactory.openSession();
 
-		// Get All Employees
 		Transaction tx = session.beginTransaction();
-		org.hibernate.Query query = session.createSQLQuery("select  * from animal");
+		org.hibernate.Query query = session.createSQLQuery("select  * from zoo");
 		
 		Map<String,Object> row = null;
 		List<Object[]> list = query.list();
-		List<AddAnimal> zoolist = new ArrayList<AddAnimal>();
+		List<Zoo> zoolist = new ArrayList<Zoo>();
 		for(Object[] objs:list){
-			AddAnimal dItem=new AddAnimal();
+			Zoo dItem=new Zoo();
 			//System.out.println("Zoo"+objs.toString());
-			dItem.setAnimalname(objs[1].toString());
 			dItem.setZooname(objs[0].toString());
-			
+			//System.out.println("Distinct Zoo"+objs[0].toString());
 			zoolist.add(dItem);
 		}
 		
 		return zoolist;
 		
+	}
+
+	@Override
+	public List<AnimalAvgFeed> avgAnimalFeed() {
+		
+		Session session = sessionFactory.openSession();
+
+		Transaction tx = session.beginTransaction();
+		org.hibernate.Query query = session.createSQLQuery("select animal,avg(quantity) from feedentries group by animal");
+		HashMap<String,Double> result = null;
+		List<Object[]> list = query.list();
+		
+		List<AnimalAvgFeed> animalavgfeed = new ArrayList<AnimalAvgFeed>();
+		for(Object[] objs:list){
+			AnimalAvgFeed dItem=new AnimalAvgFeed();
+			dItem.setAnimalname(objs[0].toString());
+			dItem.setAvgfeed(Double.parseDouble(objs[1].toString()));
+			
+			
+			animalavgfeed.add(dItem);
+		}
+		
+		
+		return animalavgfeed;
+	}
+
+	@Override
+	public List<ZooWastage> zooWastage() {
+		Session session = sessionFactory.openSession();
+
+		org.hibernate.Query query = session.createSQLQuery("select a.zooname,a.feedquantity-IFNULL(sum(b.quantity),0) from feedarrival a LEFT JOIN feedentries b"
+				+ " on a.zooname=b.zooname and a.currentdate=CURDATE() group by zooname;");
+	
+		List<Object[]> list = query.list();
+		
+		List<ZooWastage> zoowastage = new ArrayList<ZooWastage>();
+		for(Object[] objs:list){
+			ZooWastage dItem=new ZooWastage();
+			dItem.setZooname((objs[0].toString()));
+			dItem.setWaste(Double.parseDouble(objs[1].toString()));
+			
+			
+			zoowastage.add(dItem);
+		}
+		
+		
+		return zoowastage;
 	}
 }
