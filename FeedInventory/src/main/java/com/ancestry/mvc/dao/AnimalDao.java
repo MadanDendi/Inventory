@@ -8,6 +8,7 @@ import com.ancestry.mvc.model.AvgFeedTimes;
 import com.ancestry.mvc.model.FeedEntry;
 import com.ancestry.mvc.model.FeedShipArrival;
 import com.ancestry.mvc.model.Zoo;
+import com.ancestry.mvc.model.ZooAnimalCompareFeed;
 import com.ancestry.mvc.model.ZooWastage;
 
 /**
@@ -26,6 +27,7 @@ public interface AnimalDao {
 	public  List<AnimalAvgFeed> avgAnimalFeed();
 	public List<ZooWastage> zooWastage();
 	public List<AvgFeedTimes> avgFeedTimes();
+	 public List<ZooAnimalCompareFeed> compareAnimalFeedAvgZoo();
 
 
 }

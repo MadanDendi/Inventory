@@ -12,6 +12,7 @@ import com.ancestry.mvc.model.AvgFeedTimes;
 import com.ancestry.mvc.model.FeedEntry;
 import com.ancestry.mvc.model.FeedShipArrival;
 import com.ancestry.mvc.model.Zoo;
+import com.ancestry.mvc.model.ZooAnimalCompareFeed;
 import com.ancestry.mvc.model.ZooWastage;
 
 /**
@@ -194,6 +195,26 @@ public class AnimalImpl implements AnimalDao{
 		return avgfeedtimes;
 		
 	}
+	@Override
+	public List<ZooAnimalCompareFeed> compareAnimalFeedAvgZoo()
+	{
 	
+		Session session = sessionFactory.openSession();
+
+		org.hibernate.Query query = session.createSQLQuery("select a.zooname as azooname,b.zooname as bzooname,a.animal,a.feedquantity/b.feedquantity  from (select zooname,animal,avg(quantity) as feedquantity from feedentries group by zooname,animal) a,(select zooname,animal,avg(quantity) as feedquantity from feedentries group by zooname,animal)b  where a.animal=b.animal and a.zooname<>b.zooname");
+		List<Object[]> list = query.list();
+		List<ZooAnimalCompareFeed> zooanimalcompare = new ArrayList<ZooAnimalCompareFeed>();
+		
+		for(Object[] objs:list){
+			ZooAnimalCompareFeed dItem=new ZooAnimalCompareFeed();
+			//System.out.println("Values are:"+objs[0].toString()+objs[1].toString()+objs[2].toString()+objs[3].toString());
+			dItem.setAzooname(objs[0].toString());
+			dItem.setBzooname(objs[1].toString());
+			dItem.setAnimalname(objs[2].toString());
+			dItem.setPercentage(Double.parseDouble(objs[3].toString()));
+			zooanimalcompare.add(dItem);
+		}
+		return zooanimalcompare;
+	}
 	
 }

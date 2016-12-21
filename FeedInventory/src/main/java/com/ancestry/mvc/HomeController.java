@@ -26,6 +26,7 @@ import com.ancestry.mvc.model.AvgFeedTimes;
 import com.ancestry.mvc.model.FeedEntry;
 import com.ancestry.mvc.model.FeedShipArrival;
 import com.ancestry.mvc.model.Zoo;
+import com.ancestry.mvc.model.ZooAnimalCompareFeed;
 import com.ancestry.mvc.model.ZooWastage;
 import com.ancestry.mvc.service.AnimalService;
 
@@ -201,9 +202,11 @@ public class HomeController {
 		 List<AnimalAvgFeed> avganimalfeed=animalService.avgAnimalFeed();
 		 List<ZooWastage> zoowastage=animalService.zooWastage();
 		 List<AvgFeedTimes> avgfeedtimes=animalService.avgFeedTimes();
+		 List<ZooAnimalCompareFeed> zooanimalcompare=animalService.compareAnimalFeedAvgZoo();
 		 model.addAttribute("avganimalfeed", avganimalfeed);
 		 model.addAttribute("zoowastage",zoowastage);
 		 model.addAttribute("avgfeedtimes",avgfeedtimes);
+		 model.addAttribute("zooanimalcompare", zooanimalcompare);
 		
         
 		return "viewreports";

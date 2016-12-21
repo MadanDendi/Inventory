@@ -10,6 +10,7 @@ import com.ancestry.mvc.model.AvgFeedTimes;
 import com.ancestry.mvc.model.FeedEntry;
 import com.ancestry.mvc.model.FeedShipArrival;
 import com.ancestry.mvc.model.Zoo;
+import com.ancestry.mvc.model.ZooAnimalCompareFeed;
 import com.ancestry.mvc.model.ZooWastage;
 
 public class AnimalService {
@@ -55,5 +56,9 @@ public class AnimalService {
 	public List<AvgFeedTimes> avgFeedTimes()
 	{
 		return animalDao.avgFeedTimes();
+	}
+	public List<ZooAnimalCompareFeed> compareAnimalFeedAvgZoo()
+	{
+		return animalDao.compareAnimalFeedAvgZoo();
 	}
 }
