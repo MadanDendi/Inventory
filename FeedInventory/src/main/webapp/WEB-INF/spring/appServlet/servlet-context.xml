@@ -54,12 +54,10 @@
 	
 	
      <beans:bean id="animalDao" class="com.ancestry.mvc.dao.AnimalImpl" >
-      	<beans:property name="sessionFactory" ref="sessionFactory" />
+      	
    	 </beans:bean>
     
-    <beans:bean id="animalService" class="com.ancestry.mvc.service.AnimalService"> 
-     <beans:property name="animalDao" ref="animalDao" />
-      
+    <beans:bean id="animalService" class="com.ancestry.mvc.service.AnimalService">       
     </beans:bean>
  			
 	<tx:annotation-driven transaction-manager="transactionManager"/>

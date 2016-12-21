@@ -1,11 +1,12 @@
 package com.ancestry.mvc.service;
 
 import java.util.List;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ancestry.mvc.dao.AnimalDao;
 import com.ancestry.mvc.model.AddAnimal;
 import com.ancestry.mvc.model.AnimalAvgFeed;
+import com.ancestry.mvc.model.AvgFeedTimes;
 import com.ancestry.mvc.model.FeedEntry;
 import com.ancestry.mvc.model.FeedShipArrival;
 import com.ancestry.mvc.model.Zoo;
@@ -13,15 +14,16 @@ import com.ancestry.mvc.model.ZooWastage;
 
 public class AnimalService {
 	
+	@Autowired
 	private AnimalDao animalDao=null;
 
-	public AnimalDao getAnimalDao() {
+	/*public AnimalDao getAnimalDao() {
 		return animalDao;
 	}
 
 	public void setAnimalDao(AnimalDao animalDao) {
 		this.animalDao = animalDao;
-	}
+	}*/
 	
 	public void saveAnimal(AddAnimal animaladd)
 	{
@@ -49,5 +51,9 @@ public class AnimalService {
 	public List<ZooWastage> zooWastage()
 	{
 		return animalDao.zooWastage();
+	}
+	public List<AvgFeedTimes> avgFeedTimes()
+	{
+		return animalDao.avgFeedTimes();
 	}
 }

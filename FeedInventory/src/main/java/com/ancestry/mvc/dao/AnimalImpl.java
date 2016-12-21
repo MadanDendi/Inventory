@@ -1,20 +1,14 @@
 package com.ancestry.mvc.dao;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.omg.CORBA.INTERNAL;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ancestry.mvc.model.AddAnimal;
 import com.ancestry.mvc.model.AnimalAvgFeed;
+import com.ancestry.mvc.model.AvgFeedTimes;
 import com.ancestry.mvc.model.FeedEntry;
 import com.ancestry.mvc.model.FeedShipArrival;
 import com.ancestry.mvc.model.Zoo;
@@ -29,15 +23,16 @@ import com.ancestry.mvc.model.ZooWastage;
 
 
 public class AnimalImpl implements AnimalDao{
+	@Autowired
 	private SessionFactory sessionFactory;
 
-	public SessionFactory getSessionFactory() {
+	/*public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-	}
+	}*/
 
 	//Perform functionality to save Animals,zoo names accordingly 
 	@Override
@@ -66,10 +61,8 @@ public class AnimalImpl implements AnimalDao{
 		
 		Session session = sessionFactory.openSession();
 
-		Transaction tx = session.beginTransaction();
 		org.hibernate.Query query = session.createSQLQuery("select * from animal");
 		
-		Map<String,Object> row = null;
 		List<Object[]> list = query.list();
 		List<AddAnimal> animallist = new ArrayList<AddAnimal>();
 		for(Object[] objs:list){
@@ -96,7 +89,7 @@ public class AnimalImpl implements AnimalDao{
 				+ "where a.zooname=b.zooname and b.zooname=:zooname and currentdate=CURDATE()");
 		query.setParameter("zooname", feedentry.getZooname());
 		int value=((Number) query.uniqueResult()).intValue();
-		System.out.println("Result value is :"+value);
+		//System.out.println("Result value is :"+value);
 		if((value-feedentry.getQuantity()) >=0)
 		{
 		session.beginTransaction();
@@ -115,10 +108,8 @@ public class AnimalImpl implements AnimalDao{
 	public List<Zoo> getZooList() {
 		Session session = sessionFactory.openSession();
 
-		Transaction tx = session.beginTransaction();
 		org.hibernate.Query query = session.createSQLQuery("select  * from zoo");
 		
-		Map<String,Object> row = null;
 		List<Object[]> list = query.list();
 		List<Zoo> zoolist = new ArrayList<Zoo>();
 		for(Object[] objs:list){
@@ -138,9 +129,7 @@ public class AnimalImpl implements AnimalDao{
 		
 		Session session = sessionFactory.openSession();
 
-		Transaction tx = session.beginTransaction();
 		org.hibernate.Query query = session.createSQLQuery("select animal,avg(quantity) from feedentries group by animal");
-		HashMap<String,Double> result = null;
 		List<Object[]> list = query.list();
 		
 		List<AnimalAvgFeed> animalavgfeed = new ArrayList<AnimalAvgFeed>();
@@ -179,4 +168,32 @@ public class AnimalImpl implements AnimalDao{
 		
 		return zoowastage;
 	}
+
+	@Override
+	public List<AvgFeedTimes> avgFeedTimes() {
+		Session session = sessionFactory.openSession();
+
+		org.hibernate.Query query = session.createSQLQuery("select animal,count(animal) from feedentries where DATE(feedtime)=CURDATE() group by animal");
+		org.hibernate.Query query1=session.createSQLQuery("select animal,count(*) from (select distinct animal,zooname from feedentries) as a group by animal");
+		List<Object[]> list = query.list();
+		List<Object[]> list1 = query1.list();
+		List<AvgFeedTimes> avgfeedtimes = new ArrayList<AvgFeedTimes>();
+		for(Object[] objs:list){
+			AvgFeedTimes dItem=new AvgFeedTimes();
+			for(Object[] objs2:list1)
+			{
+				if(objs[0].equals(objs2[0]))
+				{
+				 // System.out.println(objs[0].toString()+" "+ Math.ceil(Integer.parseInt(objs[1].toString())/Integer.parseInt(objs2[1].toString())));
+					dItem.setAnimalname(objs[0].toString());
+					dItem.setAvgoftimes(Math.ceil(Integer.parseInt(objs[1].toString())/Integer.parseInt(objs2[1].toString())));
+					avgfeedtimes.add(dItem);
+				}
+			}
+		}
+		return avgfeedtimes;
+		
+	}
+	
+	
 }

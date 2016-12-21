@@ -76,6 +76,35 @@ style>.error {
 		</table>
 
 	</c:if>
+	
+	<c:if test="${not empty avgfeedtimes}">
+		<table border="1"
+			style="border-color: navy; position: absolute; left: 600px; top: 180px">
+
+			<thead>
+				<tr>
+					<th><h3 style="color: purple" align="center">Average Feed Times per a Day
+							</h3></th>
+				</tr>
+				<tr style="color: purple">
+					<th>Animal</th>
+					<th>Number of Times</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="listValue" items="${avgfeedtimes}" varStatus="status">
+					<tr>
+						<td><c:out value="${listValue.animalname}" /></td>
+						<td><c:out value="${listValue.avgoftimes}" /></td>
+
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+
+	</c:if>
+	
 
 
 

@@ -1,11 +1,10 @@
 package com.ancestry.mvc.dao;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import java.util.List;
 import com.ancestry.mvc.model.AddAnimal;
 import com.ancestry.mvc.model.AnimalAvgFeed;
+import com.ancestry.mvc.model.AvgFeedTimes;
 import com.ancestry.mvc.model.FeedEntry;
 import com.ancestry.mvc.model.FeedShipArrival;
 import com.ancestry.mvc.model.Zoo;
@@ -26,6 +25,7 @@ public interface AnimalDao {
 	public List<Zoo> getZooList();
 	public  List<AnimalAvgFeed> avgAnimalFeed();
 	public List<ZooWastage> zooWastage();
+	public List<AvgFeedTimes> avgFeedTimes();
 
 
 }
