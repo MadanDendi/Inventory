@@ -32,7 +32,7 @@ import com.ancestry.mvc.service.AnimalService;
 
 
 /**
- * Developer: Madan Dendi
+ * Developer: Madan Dend
  * Created Date: 12-21-2016
  * Name: HomeController
  * Handles all requests works as handler mapper.
